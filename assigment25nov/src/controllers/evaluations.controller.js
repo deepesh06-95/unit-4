@@ -26,6 +26,15 @@ router.post("", async (req, res) => {
       return res.status(500).json({ message: e.message, status: "Failed" });
     }
   });
+  router.get("/highest", async (req, res) => {
+    try {
+      const evaluations = await Evaluation.find().populate({ path: "student_id", select:"roll_id"}).populate({ path: "instructor", select:"first_name"}).populate({ path: "topic_id", select:["topic_name","topic_body"]}).lean().exec();
+      evaluations.sort((a,b) => a.marks-b.marks);
+      return res.send( evaluations[evaluations.length-1]);
+    } catch (e) {
+      return res.status(500).json({ message: e.message, status: "Failed" });
+    }
+  });
   router.patch("/:id", async (req, res) => {
     try {
       const evaluation = await Evaluation.findByIdAndUpdate(req.params.id, req.body, {
