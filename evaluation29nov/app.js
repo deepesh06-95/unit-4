@@ -187,6 +187,112 @@ app.delete("/companys/:id", async (req, res)=>{
     }
 });
 
+//skills crud
+app.post("/skills", async (req, res)=>{
+    try {
+        const skill = await Skill.create(req.body);
+
+        return res.status(201).send(skill);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.get("/skills", async (req, res)=>{
+    try {
+        const skills = await Skill.find().lean().exec();
+
+        return res.send({skills});
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.get("/skills/:id", async (req, res)=>{
+    try {
+        const skill = await Skill.findById(req.params.id).lean().exec();
+
+        return res.send(skill);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.patch("/skills/:id", async (req, res)=>{
+    try {
+        const skill = await Skill.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        }).lean().exec();
+
+        return res.status(201).send(skill);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.delete("/skills/:id", async (req, res)=>{
+    try {
+        const skill = await Skill.findByIdAndDelete(req.params.id).lean().exec();
+
+        return res.status(201).send(skill);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+//jobs crud
+app.post("/jobs", async (req, res)=>{
+    try {
+        const job = await Job.create(req.body);
+
+        return res.status(201).send(job);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.get("/jobs", async (req, res)=>{
+    try {
+        const jobs = await Job.find().lean().exec();
+
+        return res.send({jobs});
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.get("/jobs/:id", async (req, res)=>{
+    try {
+        const job = await Job.findById(req.params.id).lean().exec();
+
+        return res.send(job);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.patch("/jobs/:id", async (req, res)=>{
+    try {
+        const job = await Job.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        }).lean().exec();
+
+        return res.status(201).send(job);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.delete("/jobs/:id", async (req, res)=>{
+    try {
+        const job = await Job.findByIdAndDelete(req.params.id).lean().exec();
+
+        return res.status(201).send(job);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
 app.listen(2550, async function(){
     await connect();
     console.log("listening on port 2550");
