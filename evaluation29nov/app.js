@@ -64,9 +64,43 @@ const jobSchema = new mongoose.Schema(
 );
 const Job = mongoose.model("job",jobSchema);
 
+//skill schema
+const skillSchema = new mongoose.Schema(
+    {
+        skill_name : { type: String, required: true},
+    },
+    {
+        versionKey :false,
+        timestamps: true,
+    }
+);
+const Skill = mongoose.model("skill",skillSchema);
+
 const app = express();
 
 app.use(express.json());
+
+//crud operation
+//users crud
+app.post("/users", async (req, res)=>{
+    try {
+        const user = await User.create(req.body);
+
+        return res.status(201).send(user);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.get("/users", async (req, res)=>{
+    try {
+        const users = await User.find().lean().exec();
+
+        return res.send({users});
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
 
 app.listen(2550, async function(){
     await connect();
