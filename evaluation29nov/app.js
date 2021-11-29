@@ -155,6 +155,16 @@ app.get("/companys", async (req, res)=>{
     }
 });
 
+app.get("/companys/mostopen", async (req, res)=>{
+    try {
+        const companys = await Company.find().populate("job_id").sort({"openings":-1}).lean().exec();
+
+        return res.send(companys[0]);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
 app.get("/companys/:id", async (req, res)=>{
     try {
         const company = await Company.findById(req.params.id).lean().exec();
