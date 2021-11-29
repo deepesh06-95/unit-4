@@ -102,6 +102,91 @@ app.get("/users", async (req, res)=>{
     }
 });
 
+app.get("/users/:id", async (req, res)=>{
+    try {
+        const user = await User.findById(req.params.id).lean().exec();
+
+        return res.send(user);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.patch("/users/:id", async (req, res)=>{
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        }).lean().exec();
+
+        return res.status(201).send(user);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.delete("/users/:id", async (req, res)=>{
+    try {
+        const user = await User.findByIdAndDelete(req.params.id).lean().exec();
+
+        return res.status(201).send(user);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+//companys crud
+app.post("/companys", async (req, res)=>{
+    try {
+        const company = await Company.create(req.body);
+
+        return res.status(201).send(company);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.get("/companys", async (req, res)=>{
+    try {
+        const companys = await Company.find().lean().exec();
+
+        return res.send({companys});
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.get("/companys/:id", async (req, res)=>{
+    try {
+        const company = await Company.findById(req.params.id).lean().exec();
+
+        return res.send(company);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.patch("/companys/:id", async (req, res)=>{
+    try {
+        const company = await Company.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        }).lean().exec();
+
+        return res.status(201).send(company);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
+app.delete("/companys/:id", async (req, res)=>{
+    try {
+        const company = await Company.findByIdAndDelete(req.params.id).lean().exec();
+
+        return res.status(201).send(company);
+    } catch(e){
+        return res.status(500).json({message, status: "Failed"});
+    }
+});
+
 app.listen(2550, async function(){
     await connect();
     console.log("listening on port 2550");
