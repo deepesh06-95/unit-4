@@ -4,4 +4,4 @@ const connect = ()=>{
     return mongoose.connect("mongodb://127.0.0.1:27017/naukri");
 };
 
-module.exports =connect;
+module.exports = connect;
