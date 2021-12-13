@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
   return res.send(movies);
 });
 router.get("/actor", async (req, res) => {
-  const movies = await Movie({"actors":{$eq:"akshay"}}).lean().exec();
+  const movies = await Movie.find({"actors":{$eq:"akshay"}}).lean().exec();
 
   return res.send(movies);
 });
