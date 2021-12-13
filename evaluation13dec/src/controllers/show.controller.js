@@ -35,4 +35,10 @@ router.get("/", async (req, res) => {
   return res.send(shows);
 });
 
+router.get("/nearest", async (req, res) => {
+  const shows = await Show.find({"screen":{$eq:"61b725dfdc7e0435319a163c"}}).lean().exec();
+
+  return res.send(shows);
+});
+
 module.exports = router;
