@@ -1,6 +1,6 @@
 const express = require("express");
 
-const Seat = require("../models/seat.model");
+const Movie = require("../models/movie.model");
 
 const authenticate = require("../middlewares/authenticate");
 const authorise = require("../middlewares/authorise");
@@ -15,11 +15,15 @@ router.post(
     try {
       const user = req.user;
 
-      const seat = await Seat.create({
-        show: user.show._id,
+      const movie = await Movie.create({
+        name: req.body.name,
+        actors : req.body.actors,
+        languages: req.body.languages,
+        directors: req.body.directors,
+        poster_urls:["www.google.com"],
       });
 
-      return res.status(201).json({ seat });
+      return res.status(201).json({ movie });
     } catch (e) {
       return res.status(500).json({ status: "failed", message: e.message });
     }
@@ -27,9 +31,9 @@ router.post(
 );
 
 router.get("/", async (req, res) => {
-  const seats = await Seat.find().lean().exec();
+  const movies = await Movie.find().lean().exec();
 
-  return res.send(seats);
+  return res.send(movies);
 });
 
 module.exports = router;
