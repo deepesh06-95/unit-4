@@ -17,9 +17,9 @@ router.post(
 
       const show = await Show.create({
         timing: req.body.timing,
-        movie: user.movie._id,
+        movie: req.body.movie,
         total_seats: req.body.total_seats,
-        screen: user.screen._id,
+        screen: req.body.screen,
       });
 
       return res.status(201).json({ show });

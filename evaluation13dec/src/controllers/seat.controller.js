@@ -16,7 +16,8 @@ router.post(
       const user = req.user;
 
       const seat = await Seat.create({
-        show: user.show._id,
+        show: req.body.show,
+        user_id : user.user._id
       });
 
       return res.status(201).json({ seat });

@@ -14,10 +14,10 @@ router.post(
   async (req, res) => {
     try {
       const user = req.user;
-
       const screen = await Screen.create({
         name: req.body.name,
-        theater: user.theater._id,
+        theater: req.body.theater,
+        user_id : user.user._id
       });
 
       return res.status(201).json({ screen });
