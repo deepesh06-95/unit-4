@@ -6,7 +6,8 @@ const seatSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "show",
       required: true,
-    },
+    }
+},
   {
     versionKey: false,
     timestamps: true,
